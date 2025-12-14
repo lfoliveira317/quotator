@@ -29,23 +29,37 @@ A professional, React-based application for generating, managing, and sending pr
 ### Prerequisites
 
 - Node.js (v16 or higher)
-- pnpm (v8 or higher)
+- Package Manager: `npm`, `yarn`, or `pnpm`
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/quotator.git
+   git clone https://github.com/lfoliveira317/quotator.git
    cd quotator
    ```
 
-2. Install dependencies:
+2. Install dependencies (choose one):
    ```bash
+   # using npm
+   npm install
+
+   # using yarn
+   yarn install
+
+   # using pnpm
    pnpm install
    ```
 
 3. Start the development server:
    ```bash
+   # using npm
+   npm run dev
+
+   # using yarn
+   yarn dev
+
+   # using pnpm
    pnpm dev
    ```
 
