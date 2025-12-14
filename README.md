@@ -1,4 +1,19 @@
-# Quotator - Business Price Quotation System
+# Quotator Project
+
+**My role:** Developer
+
+**Project description:**
+Sample Template for a quotation system
+
+**Skills and deliverables:**
+- React Bootstrap
+- JavaScript
+- Vercel
+- GitHub
+
+---
+
+## Overview
 
 A professional, React-based application for generating, managing, and sending price quotations to clients. Built with a clean **Swiss Style** design system using Bootstrap.
 
