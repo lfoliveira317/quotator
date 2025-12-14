@@ -53,30 +53,46 @@ export default function Home() {
   return (
     <div className="min-vh-100 bg-light d-flex flex-column">
       {/* Navbar */}
-      <Navbar bg="white" expand="lg" className="shadow-sm sticky-top mb-4 border-bottom">
+      <Navbar expand="lg" className="sticky-top mb-5">
         <Container>
-          <Navbar.Brand href="#" className="d-flex align-items-center gap-2 fw-bold text-dark">
-            <div className="bg-dark text-white p-1 rounded">
+          <Navbar.Brand href="#" className="d-flex align-items-center gap-2">
+            <div className="bg-primary text-white p-2 rounded-3 d-flex align-items-center justify-content-center shadow-sm" style={{ width: 40, height: 40 }}>
               <FileEarmarkText size={20} />
             </div>
-            Quotator
+            <span className="ms-1">Quotator</span>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="mx-auto bg-white rounded-pill px-3 py-1 shadow-sm border d-none d-lg-flex">
+              <Nav.Link href="#" className="px-3" active={view === "list"} onClick={() => setView("list")}>Dashboard</Nav.Link>
+              <Nav.Link href="#" className="px-3">Clients</Nav.Link>
+              <Nav.Link href="#" className="px-3">Settings</Nav.Link>
+            </Nav>
+            {/* Mobile Nav */}
+            <Nav className="d-lg-none my-3">
               <Nav.Link href="#" active={view === "list"} onClick={() => setView("list")}>Dashboard</Nav.Link>
               <Nav.Link href="#">Clients</Nav.Link>
               <Nav.Link href="#">Settings</Nav.Link>
             </Nav>
-            {view === "list" && (
-              <Button 
-                variant="primary" 
-                className="d-flex align-items-center gap-2"
-                onClick={handleCreateNew}
-              >
-                <PlusLg /> New Quotation
-              </Button>
-            )}
+            
+            <div className="d-flex align-items-center gap-3">
+              {view === "list" && (
+                <Button 
+                  variant="primary" 
+                  className="d-flex align-items-center gap-2 shadow-sm"
+                  onClick={handleCreateNew}
+                >
+                  <PlusLg size={18} /> 
+                  <span className="d-none d-sm-inline">New Quote</span>
+                  <span className="d-inline d-sm-none">New</span>
+                </Button>
+              )}
+              <div className="d-none d-lg-block">
+                <div className="rounded-circle bg-light border d-flex align-items-center justify-content-center text-secondary fw-bold" style={{ width: 40, height: 40 }}>
+                  JD
+                </div>
+              </div>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

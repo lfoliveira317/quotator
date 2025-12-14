@@ -63,39 +63,50 @@ export default function QuotationList({ quotations, onView, onEdit, onDelete }: 
     <>
       {/* Desktop Table View */}
       <div className="table-responsive d-none d-md-block">
-        <Table hover className="align-middle">
-          <thead className="bg-light">
+        <Table hover className="align-middle mb-0">
+          <thead>
             <tr>
-              <th>Number</th>
+              <th className="ps-4">Number</th>
               <th>Client</th>
               <th>Date</th>
               <th>Total</th>
               <th>Status</th>
-              <th className="text-end">Actions</th>
+              <th className="text-end pe-4">Actions</th>
             </tr>
           </thead>
           <tbody>
             {quotations.map((q) => (
-              <tr key={q.id}>
-                <td className="fw-medium">{q.number}</td>
-                <td>{q.clientName}</td>
-                <td>{q.date}</td>
-                <td className="fw-bold">${q.total.toLocaleString()}</td>
+              <tr key={q.id} className="position-relative">
+                <td className="ps-4">
+                  <span className="fw-semibold text-primary">{q.number}</span>
+                </td>
                 <td>
-                  <Badge bg={getStatusBadge(q.status)} className="px-3 py-2 rounded-pill">
+                  <div className="d-flex align-items-center">
+                    <div className="rounded-circle bg-light border d-flex align-items-center justify-content-center text-secondary small me-2" style={{ width: 32, height: 32 }}>
+                      {q.clientName.charAt(0)}
+                    </div>
+                    <span className="fw-medium">{q.clientName}</span>
+                  </div>
+                </td>
+                <td className="text-secondary">{q.date}</td>
+                <td className="fw-bold text-dark">${q.total.toLocaleString()}</td>
+                <td>
+                  <Badge bg={getStatusBadge(q.status)} className="px-3 py-2 rounded-pill fw-bold shadow-sm border border-white">
                     {q.status}
                   </Badge>
                 </td>
-                <td className="text-end">
-                  <Button variant="link" className="text-dark p-1" onClick={() => onView(q)} title="View">
-                    <Eye size={18} />
-                  </Button>
-                  <Button variant="link" className="text-dark p-1" onClick={() => onEdit(q)} title="Edit">
-                    <Pencil size={18} />
-                  </Button>
-                  <Button variant="link" className="text-danger p-1" onClick={() => onDelete(q.id)} title="Delete">
-                    <Trash size={18} />
-                  </Button>
+                <td className="text-end pe-4">
+                  <div className="d-flex justify-content-end gap-1">
+                    <Button variant="light" size="sm" className="text-secondary border-0" onClick={() => onView(q)} title="View">
+                      <Eye size={16} />
+                    </Button>
+                    <Button variant="light" size="sm" className="text-secondary border-0" onClick={() => onEdit(q)} title="Edit">
+                      <Pencil size={16} />
+                    </Button>
+                    <Button variant="light" size="sm" className="text-danger border-0" onClick={() => onDelete(q.id)} title="Delete">
+                      <Trash size={16} />
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

@@ -124,18 +124,21 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Card className="border-0 shadow-sm mb-4">
-        <Card.Body className="p-3 p-md-4">
-          <h4 className="mb-4">Quotation Details</h4>
-          <Row className="g-3 mb-4">
+      <Card className="border-0 shadow-sm mb-4 overflow-hidden">
+        <div className="bg-light border-bottom px-4 py-3">
+          <h5 className="mb-0 fw-bold text-primary">Quotation Details</h5>
+        </div>
+        <Card.Body className="p-4">
+          <Row className="g-4 mb-4">
             <Col xs={12} md={4}>
               <Form.Group>
-                <Form.Label>Quotation Number</Form.Label>
+                <Form.Label className="text-secondary small fw-bold text-uppercase">Quotation Number</Form.Label>
                 <Form.Control 
                   type="text" 
                   value={formData.number} 
                   onChange={e => setFormData({...formData, number: e.target.value})}
                   required 
+                  className="bg-light border-0 fw-bold"
                 />
               </Form.Group>
             </Col>
@@ -192,18 +195,18 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
             </Col>
           </Row>
 
-          <h5 className="mb-3">Line Items</h5>
+          <h5 className="mb-3 mt-4 fw-bold">Line Items</h5>
           
           {/* Desktop Table View */}
-          <div className="d-none d-md-block">
-            <Table bordered hover className="mb-3">
+          <div className="d-none d-md-block rounded-3 border overflow-hidden mb-4">
+            <Table hover className="mb-0">
               <thead className="bg-light">
                 <tr>
-                  <th style={{ width: "40%" }}>Description</th>
-                  <th style={{ width: "15%" }}>Quantity</th>
-                  <th style={{ width: "20%" }}>Unit Price</th>
-                  <th style={{ width: "20%" }}>Total</th>
-                  <th style={{ width: "5%" }}></th>
+                  <th style={{ width: "40%" }} className="border-0 ps-4">Description</th>
+                  <th style={{ width: "15%" }} className="border-0">Quantity</th>
+                  <th style={{ width: "20%" }} className="border-0">Unit Price</th>
+                  <th style={{ width: "20%" }} className="border-0 text-end pe-4">Total</th>
+                  <th style={{ width: "5%" }} className="border-0"></th>
                 </tr>
               </thead>
               <tbody>
@@ -237,11 +240,11 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
                         required
                       />
                     </td>
-                    <td className="align-middle fw-bold text-end">
+                    <td className="align-middle fw-bold text-end pe-4">
                       ${(item.quantity * item.unitPrice).toFixed(2)}
                     </td>
                     <td className="align-middle text-center">
-                      <Button variant="link" className="text-danger p-0" onClick={() => removeItem(item.id)}>
+                      <Button variant="light" size="sm" className="text-danger border-0" onClick={() => removeItem(item.id)}>
                         <Trash />
                       </Button>
                     </td>
