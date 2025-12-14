@@ -1,94 +1,110 @@
-export interface Quote {
-  id: number;
-  text: string;
-  author: string;
-  category: string;
-  isFavorite: boolean;
+export interface Client {
+  id: string;
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
 }
 
-export const initialQuotes: Quote[] = [
+export interface LineItem {
+  id: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export type QuotationStatus = 'Draft' | 'Sent' | 'Accepted' | 'Rejected';
+
+export interface Quotation {
+  id: string;
+  number: string; // e.g., Q-2023-001
+  date: string;
+  validUntil: string;
+  clientId: string;
+  clientName: string; // Denormalized for easier display
+  items: LineItem[];
+  subtotal: number;
+  taxRate: number; // Percentage (e.g., 10 for 10%)
+  taxAmount: number;
+  total: number;
+  status: QuotationStatus;
+  notes?: string;
+}
+
+export const initialClients: Client[] = [
   {
-    id: 1,
-    text: "The only way to do great work is to love what you do.",
-    author: "Steve Jobs",
-    category: "Work",
-    isFavorite: false,
+    id: 'c1',
+    name: 'Acme Corp',
+    email: 'contact@acme.com',
+    address: '123 Industrial Way, Tech City',
+    phone: '(555) 123-4567',
   },
   {
-    id: 2,
-    text: "Life is what happens when you're busy making other plans.",
-    author: "John Lennon",
-    category: "Life",
-    isFavorite: true,
+    id: 'c2',
+    name: 'Globex Corporation',
+    email: 'procurement@globex.com',
+    address: '456 Global Blvd, Metropolis',
+    phone: '(555) 987-6543',
   },
   {
-    id: 3,
-    text: "The future belongs to those who believe in the beauty of their dreams.",
-    author: "Eleanor Roosevelt",
-    category: "Inspiration",
-    isFavorite: false,
+    id: 'c3',
+    name: 'Soylent Corp',
+    email: 'info@soylent.com',
+    address: '789 Green Ave, Eco Town',
+    phone: '(555) 555-5555',
+  },
+];
+
+export const initialQuotations: Quotation[] = [
+  {
+    id: 'q1',
+    number: 'QT-2024-001',
+    date: '2024-03-10',
+    validUntil: '2024-04-10',
+    clientId: 'c1',
+    clientName: 'Acme Corp',
+    items: [
+      { id: 'i1', description: 'Web Development Services', quantity: 1, unitPrice: 5000 },
+      { id: 'i2', description: 'Hosting Setup', quantity: 1, unitPrice: 200 },
+    ],
+    subtotal: 5200,
+    taxRate: 10,
+    taxAmount: 520,
+    total: 5720,
+    status: 'Sent',
+    notes: 'Payment terms: 50% upfront, 50% upon completion.',
   },
   {
-    id: 4,
-    text: "It is during our darkest moments that we must focus to see the light.",
-    author: "Aristotle",
-    category: "Wisdom",
-    isFavorite: false,
+    id: 'q2',
+    number: 'QT-2024-002',
+    date: '2024-03-12',
+    validUntil: '2024-04-12',
+    clientId: 'c2',
+    clientName: 'Globex Corporation',
+    items: [
+      { id: 'i3', description: 'Consulting Hours', quantity: 10, unitPrice: 150 },
+    ],
+    subtotal: 1500,
+    taxRate: 10,
+    taxAmount: 150,
+    total: 1650,
+    status: 'Draft',
+    notes: 'Preliminary estimate based on initial requirements.',
   },
   {
-    id: 5,
-    text: "Whoever is happy will make others happy too.",
-    author: "Anne Frank",
-    category: "Happiness",
-    isFavorite: true,
-  },
-  {
-    id: 6,
-    text: "Do not go where the path may lead, go instead where there is no path and leave a trail.",
-    author: "Ralph Waldo Emerson",
-    category: "Leadership",
-    isFavorite: false,
-  },
-  {
-    id: 7,
-    text: "You will face many defeats in life, but never let yourself be defeated.",
-    author: "Maya Angelou",
-    category: "Resilience",
-    isFavorite: false,
-  },
-  {
-    id: 8,
-    text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
-    author: "Nelson Mandela",
-    category: "Resilience",
-    isFavorite: true,
-  },
-  {
-    id: 9,
-    text: "In the end, it's not the years in your life that count. It's the life in your years.",
-    author: "Abraham Lincoln",
-    category: "Life",
-    isFavorite: false,
-  },
-  {
-    id: 10,
-    text: "Never let the fear of striking out keep you from playing the game.",
-    author: "Babe Ruth",
-    category: "Sports",
-    isFavorite: false,
-  },
-  {
-    id: 11,
-    text: "Money and success don’t change people; they merely amplify what is already there.",
-    author: "Will Smith",
-    category: "Success",
-    isFavorite: false,
-  },
-  {
-    id: 12,
-    text: "Your time is limited, so don't waste it living someone else's life.",
-    author: "Steve Jobs",
-    category: "Life",
-    isFavorite: true,
+    id: 'q3',
+    number: 'QT-2024-003',
+    date: '2024-02-28',
+    validUntil: '2024-03-28',
+    clientId: 'c1',
+    clientName: 'Acme Corp',
+    items: [
+      { id: 'i4', description: 'Annual Maintenance Contract', quantity: 1, unitPrice: 1200 },
+    ],
+    subtotal: 1200,
+    taxRate: 10,
+    taxAmount: 120,
+    total: 1320,
+    status: 'Accepted',
   },
 ];

@@ -137,3 +137,66 @@ h1, h2, h3, h4, h5, h6 {
 .quote-card {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* Swiss Table Styles */
+.table {
+  --bs-table-bg: transparent;
+}
+
+.table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--swiss-black);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.table tbody td {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+  border-bottom: 1px solid #e5e5e5;
+  border-radius: 0;
+}
+
+.modal-footer {
+  border-top: 1px solid #e5e5e5;
+  border-radius: 0;
+}
+
+/* Print Styles */
+@media print {
+  .d-print-none {
+    display: none !important;
+  }
+  .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+  }
+  .modal-content {
+    box-shadow: none;
+    border: none;
+  }
+  .modal-body {
+    padding: 0 !important;
+  }
+  body {
+    background-color: white;
+  }
+}
