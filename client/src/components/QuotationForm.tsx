@@ -64,13 +64,71 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
     onSave(formData);
   };
 
+  // Mobile Line Item Component
+  const MobileLineItem = ({ item }: { item: LineItem }) => (
+    <Card className="mb-3 bg-light border-0 d-md-none">
+      <Card.Body className="p-3">
+        <Form.Group className="mb-2">
+          <Form.Label className="small text-muted mb-1">Description</Form.Label>
+          <Form.Control 
+            type="text" 
+            value={item.description} 
+            onChange={e => updateItem(item.id, 'description', e.target.value)}
+            placeholder="Item description"
+            required
+          />
+        </Form.Group>
+        <Row className="g-2">
+          <Col xs={4}>
+            <Form.Group>
+              <Form.Label className="small text-muted mb-1">Qty</Form.Label>
+              <Form.Control 
+                type="number" 
+                min="1"
+                value={item.quantity} 
+                onChange={e => updateItem(item.id, 'quantity', parseFloat(e.target.value))}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={4}>
+            <Form.Group>
+              <Form.Label className="small text-muted mb-1">Price</Form.Label>
+              <Form.Control 
+                type="number" 
+                min="0"
+                step="0.01"
+                value={item.unitPrice} 
+                onChange={e => updateItem(item.id, 'unitPrice', parseFloat(e.target.value))}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={4}>
+            <Form.Group>
+              <Form.Label className="small text-muted mb-1">Total</Form.Label>
+              <div className="form-control bg-white border-0 fw-bold px-2">
+                ${(item.quantity * item.unitPrice).toFixed(2)}
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
+        <div className="text-end mt-2">
+          <Button variant="link" className="text-danger p-0 text-decoration-none small" onClick={() => removeItem(item.id)}>
+            <Trash className="me-1" /> Remove Item
+          </Button>
+        </div>
+      </Card.Body>
+    </Card>
+  );
+
   return (
     <Form onSubmit={handleSubmit}>
       <Card className="border-0 shadow-sm mb-4">
-        <Card.Body className="p-4">
+        <Card.Body className="p-3 p-md-4">
           <h4 className="mb-4">Quotation Details</h4>
           <Row className="g-3 mb-4">
-            <Col md={4}>
+            <Col xs={12} md={4}>
               <Form.Group>
                 <Form.Label>Quotation Number</Form.Label>
                 <Form.Control 
@@ -81,7 +139,7 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
                 />
               </Form.Group>
             </Col>
-            <Col md={4}>
+            <Col xs={6} md={4}>
               <Form.Group>
                 <Form.Label>Date</Form.Label>
                 <Form.Control 
@@ -92,7 +150,7 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
                 />
               </Form.Group>
             </Col>
-            <Col md={4}>
+            <Col xs={6} md={4}>
               <Form.Group>
                 <Form.Label>Valid Until</Form.Label>
                 <Form.Control 
@@ -103,7 +161,7 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
                 />
               </Form.Group>
             </Col>
-            <Col md={6}>
+            <Col xs={12} md={6}>
               <Form.Group>
                 <Form.Label>Client</Form.Label>
                 <Form.Select 
@@ -118,7 +176,7 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col md={6}>
+            <Col xs={12} md={6}>
               <Form.Group>
                 <Form.Label>Status</Form.Label>
                 <Form.Select 
@@ -135,66 +193,77 @@ export default function QuotationForm({ initialData, clients, onSave, onCancel }
           </Row>
 
           <h5 className="mb-3">Line Items</h5>
-          <Table bordered hover className="mb-3">
-            <thead className="bg-light">
-              <tr>
-                <th style={{ width: "40%" }}>Description</th>
-                <th style={{ width: "15%" }}>Quantity</th>
-                <th style={{ width: "20%" }}>Unit Price</th>
-                <th style={{ width: "20%" }}>Total</th>
-                <th style={{ width: "5%" }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {formData.items.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <Form.Control 
-                      type="text" 
-                      value={item.description} 
-                      onChange={e => updateItem(item.id, 'description', e.target.value)}
-                      placeholder="Item description"
-                      required
-                    />
-                  </td>
-                  <td>
-                    <Form.Control 
-                      type="number" 
-                      min="1"
-                      value={item.quantity} 
-                      onChange={e => updateItem(item.id, 'quantity', parseFloat(e.target.value))}
-                      required
-                    />
-                  </td>
-                  <td>
-                    <Form.Control 
-                      type="number" 
-                      min="0"
-                      step="0.01"
-                      value={item.unitPrice} 
-                      onChange={e => updateItem(item.id, 'unitPrice', parseFloat(e.target.value))}
-                      required
-                    />
-                  </td>
-                  <td className="align-middle fw-bold text-end">
-                    ${(item.quantity * item.unitPrice).toFixed(2)}
-                  </td>
-                  <td className="align-middle text-center">
-                    <Button variant="link" className="text-danger p-0" onClick={() => removeItem(item.id)}>
-                      <Trash />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
           
-          <div className="d-flex justify-content-between align-items-start mb-4">
-            <Button variant="outline-primary" size="sm" onClick={addItem}>
+          {/* Desktop Table View */}
+          <div className="d-none d-md-block">
+            <Table bordered hover className="mb-3">
+              <thead className="bg-light">
+                <tr>
+                  <th style={{ width: "40%" }}>Description</th>
+                  <th style={{ width: "15%" }}>Quantity</th>
+                  <th style={{ width: "20%" }}>Unit Price</th>
+                  <th style={{ width: "20%" }}>Total</th>
+                  <th style={{ width: "5%" }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {formData.items.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <Form.Control 
+                        type="text" 
+                        value={item.description} 
+                        onChange={e => updateItem(item.id, 'description', e.target.value)}
+                        placeholder="Item description"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <Form.Control 
+                        type="number" 
+                        min="1"
+                        value={item.quantity} 
+                        onChange={e => updateItem(item.id, 'quantity', parseFloat(e.target.value))}
+                        required
+                      />
+                    </td>
+                    <td>
+                      <Form.Control 
+                        type="number" 
+                        min="0"
+                        step="0.01"
+                        value={item.unitPrice} 
+                        onChange={e => updateItem(item.id, 'unitPrice', parseFloat(e.target.value))}
+                        required
+                      />
+                    </td>
+                    <td className="align-middle fw-bold text-end">
+                      ${(item.quantity * item.unitPrice).toFixed(2)}
+                    </td>
+                    <td className="align-middle text-center">
+                      <Button variant="link" className="text-danger p-0" onClick={() => removeItem(item.id)}>
+                        <Trash />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+
+          {/* Mobile List View */}
+          <div className="d-md-none">
+            {formData.items.map((item) => (
+              <MobileLineItem key={item.id} item={item} />
+            ))}
+          </div>
+          
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4 gap-4">
+            <Button variant="outline-primary" size="sm" onClick={addItem} className="w-100 w-md-auto">
               <Plus size={20} /> Add Item
             </Button>
             
-            <div className="w-25">
+            <div className="w-100 w-md-25">
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal:</span>
                 <span className="fw-bold">${formData.subtotal.toFixed(2)}</span>
